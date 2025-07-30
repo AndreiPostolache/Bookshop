@@ -1,0 +1,24 @@
+    const cds = require('@sap/cds');
+    const express = require('express');
+    const path = require('path');
+
+    // This is a custom server.js to explicitly serve the UI content.
+    // It's often used when you need more control than what package.json provides.
+    cds.on('bootstrap', app => {
+        // Serve the static UI content from 'app/webapp' under the '/webapp' path
+        // This ensures that requests to /webapp/index.html, /webapp/Component.js,
+        // /webapp/i18n/i18n.properties etc., are correctly mapped to the files.
+        app.use('/webapp', express.static(path.join(__dirname, '../app/webapp')));
+
+        // You might also want to serve the root path to redirect to /webapp
+        // This is optional, but convenient if users navigate to just the root URL
+        app.get('/', (req, res) => {
+            res.redirect('/webapp/index.html');
+        });
+
+        // Add any other custom middleware or routes here if needed
+    });
+
+    // Delegate to the default CDS server for services
+    module.exports = cds.server;
+    

@@ -6,8 +6,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/hana": "^2.1.2",
     "@sap/cds": "^9",
-    "express": "^4"
+    "express": "^4",
+    "hdb": "^2.25.1"
   },
   "engines": {
     "node": ">=20"
@@ -19,5 +21,21 @@
   },
   "scripts": {
     "start": "cds-serve"
+  },
+  "cds": {
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "credentials": {
+          "url": "bookshop.db"
+        }
+      }
+    }
+    
+  
   }
+  
 }
